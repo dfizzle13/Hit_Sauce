@@ -29,7 +29,7 @@ const initialProducts=[
 {id:'inferno',name:'Afterburn Inferno',price:10.49,heat:'hot',color:'#f51da8',pale:'#ffe8f6',tag:'Big heat energy',stock:12,description:'A punchy, high-heat mock flavor concept for heat chasers who like their sauce loud.'}
 ];
 const money=n=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD'}).format(n);
-let products=load('hitsauce_products',initialProducts),cart=load('hitsauce_cart',{}),filter='all';
+let products=load('hitsauce_products',initialProducts);if(!Array.isArray(products)||products.length===0){products=structuredClone(initialProducts);try{localStorage.setItem('hitsauce_products',JSON.stringify(products))}catch{}}let cart=load('hitsauce_cart',{}),filter='all';
 function load(k,f){try{const v=localStorage.getItem(k);return v?JSON.parse(v):structuredClone(f)}catch{return structuredClone(f)}}
 function save(){localStorage.setItem('hitsauce_products',JSON.stringify(products));localStorage.setItem('hitsauce_cart',JSON.stringify(cart))}
 function toast(s){const t=document.getElementById('toast');t.textContent=s;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200)}
