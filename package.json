@@ -1,0 +1,12 @@
+{
+  "name": "hit-sauce-storefront",
+  "version": "1.0.0",
+  "private": true,
+  "description": "HIT SAUCE storefront prototype and browser regression tests",
+  "scripts": {
+    "test": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.55.0"
+  }
+}
