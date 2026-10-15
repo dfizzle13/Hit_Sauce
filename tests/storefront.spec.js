@@ -1,11 +1,12 @@
 const { test, expect } = require('@playwright/test');
 
 test.beforeEach(async ({ page }) => {
-  await page.addInitScript(() => {
+  await page.goto('/');
+  await page.evaluate(() => {
     localStorage.clear();
     sessionStorage.clear();
   });
-  await page.goto('/');
+  await page.reload();
 });
 
 test('catalog renders all four demo products', async ({ page }) => {
