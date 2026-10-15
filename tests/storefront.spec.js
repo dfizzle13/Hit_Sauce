@@ -76,3 +76,31 @@ test('checkout creates an explicitly local demo order without taking payment', a
   expect(orders).toHaveLength(1);
   expect(orders[0].status).toContain('payment not processed');
 });
+
+
+test('mobile navigation is accessible and opens the section links', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  const menu = page.locator('#mobileMenuToggle');
+  await expect(menu).toBeVisible();
+  await expect(menu).toHaveAttribute('aria-expanded', 'false');
+  await menu.click();
+  await expect(menu).toHaveAttribute('aria-expanded', 'true');
+  await expect(page.locator('#primaryNav')).toBeVisible();
+  await page.locator('#primaryNav a[href="#story"]').click();
+  await expect(menu).toHaveAttribute('aria-expanded', 'false');
+  await expect(page).toHaveURL(/#story$/);
+});
+
+test('storefront fits common mobile viewport widths without horizontal page overflow', async ({ page }) => {
+  for (const width of [320, 360, 390, 430, 640]) {
+    await page.setViewportSize({ width, height: 844 });
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
+    const dimensions = await page.evaluate(() => ({
+      viewport: document.documentElement.clientWidth,
+      page: document.documentElement.scrollWidth
+    }));
+    expect(dimensions.page, `horizontal overflow at viewport width ${width}px`).toBeLessThanOrEqual(dimensions.viewport + 1);
+    await expect(page.locator('#cartOpen')).toBeVisible();
+    await expect(page.locator('#products .product')).toHaveCount(4);
+  }
+});
