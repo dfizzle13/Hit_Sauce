@@ -25,8 +25,9 @@ Playwright starts a local static server automatically. To preview without tests,
 
 ## Current prototype capabilities
 
-- Four mock flavor concepts with heat filters and product detail views.
+- Four mock flavor concepts with searchable catalog, heat filters, price/name/heat sorting, distinct on-brand bottle illustrations, and product detail views.
 - Add-to-bag, quantity controls, stock-aware add buttons, subtotal calculation, and browser-local cart persistence.
+- Mobile-first navigation and responsive catalog controls with empty-state recovery.
 - Demo checkout that records an explicitly non-payment order preview in this browser.
 - Browser-local product management: add, edit, remove, and update price, description, heat, badge, and stock.
 - Browser-local sample/reviewer content.
