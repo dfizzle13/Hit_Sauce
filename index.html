@@ -34,8 +34,6 @@
 @media(prefers-reduced-motion:reduce){#products .product,#products .product.filter-enter{animation:none!important;transition:none!important}}
 </style>
 <script src="./js/storefront.js" defer></script>
-<script src="./js/filter-fallback.js" defer></script>
-<script src="./js/resilience.js" defer></script>
 </body></html>+(Number(n)||0).toFixed(2);
  const catalog=()=>{const saved=read('hitsauce_products',defaults);return Array.isArray(saved)?[...defaults.filter(d=>!saved.some(p=>p&&p.id===d.id)),...saved].filter(p=>p&&p.id&&p.name):defaults};
  let products=catalog();
