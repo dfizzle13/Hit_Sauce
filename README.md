@@ -1,6 +1,6 @@
 # HIT SAUCE Storefront
 
-A responsive storefront prototype inspired by the HIT SAUCE label direction: comic-book attitude, navy, electric cyan and pink accents, punch yellow, and bold flavor color. The wordmark intentionally reads **HIT SAUCE** (the I is a letter, not an exclamation point). Brand line: **Bold Flavor Hits Different**.
+A responsive storefront prototype inspired by the HIT SAUCE label direction: bold, high-energy attitude, navy, electric cyan and pink accents, punch yellow, and bold flavor color. The wordmark intentionally reads **HIT SAUCE** (the I is a letter, not an exclamation point). Brand line: **Bold Flavor Hits Different**.
 
 ## Project layout
 
