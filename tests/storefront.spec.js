@@ -130,3 +130,17 @@ test('each flavor uses a distinct on-brand mock bottle illustration without gene
   await expect(page.locator('#products .bottle-label-art strong')).toHaveCount(4);
   await expect(page.locator('#products .product-stock-image')).toHaveCount(0);
 });
+
+test('product detail does not invent customer testimonials', async ({ page }) => {
+  await page.locator('#products a[href="#product/original"]').first().click();
+  await expect(page.locator('#productPage')).toContainText('No customer reviews yet');
+  await expect(page.locator('#productPage')).not.toContainText('Mia R.');
+});
+
+test('Escape closes the cart and returns focus to the bag button', async ({ page }) => {
+  await page.locator('#cartOpen').click();
+  await expect(page.locator('#cartOverlay')).toHaveClass(/open/);
+  await page.keyboard.press('Escape');
+  await expect(page.locator('#cartOverlay')).not.toHaveClass(/open/);
+  await expect(page.locator('#cartOpen')).toBeFocused();
+});
