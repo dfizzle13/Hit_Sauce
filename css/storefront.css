@@ -145,18 +145,9 @@ img{max-width:100%}
 }
 
 
-/* Hero bottle upgrade: larger product presence with a branded front-label concept. */
+/* Hero bottle scale refinement: give the bottle more presence without a faux label. */
 .hero-bottle-stage{width:min(100%,500px);min-height:450px}
 .hero-stock-image{width:min(96%,410px);height:430px;object-fit:contain;transform:rotate(-9deg) scale(1.12);filter:drop-shadow(20px 28px 18px #02091c85)}
-.hero-label-overlay{position:absolute;z-index:2;left:50%;top:51%;width:clamp(112px,12vw,150px);min-height:184px;transform:translate(-50%,-43%) rotate(-9deg);padding:10px 8px 7px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;overflow:hidden;border:3px solid #fff8e9;outline:2px solid #06102c;background:linear-gradient(145deg,#05e2e2 0 12%,#fff8e9 12% 78%,#ff8b0a 78%);color:#021b43;box-shadow:0 4px 0 #f51da8,0 7px 15px #02091c55;clip-path:polygon(3% 0,97% 0,100% 96%,92% 100%,0 96%)}
-.hero-label-brand{font-size:clamp(15px,1.8vw,22px);font-weight:1000;font-style:italic;letter-spacing:-.08em;line-height:.9;text-shadow:1px 1px #fff}
-.hero-label-brand span{color:#f51da8}
-.hero-label-pepper{font-size:clamp(27px,3vw,38px);line-height:1.05;filter:drop-shadow(2px 2px 0 #fff)}
-.hero-label-flavor{font-size:8px;font-weight:1000;line-height:1.1;letter-spacing:.08em}
-.hero-label-flavor strong{display:block;font-size:clamp(15px,1.7vw,20px);letter-spacing:-.04em;color:#ff602f;text-shadow:1px 1px #021b43}
-.hero-label-slogan{width:100%;margin-top:5px;padding:4px 2px;background:#021b43;color:#fff8e9;font-size:7px;font-weight:1000;letter-spacing:.1em;line-height:1.2}
-.hero-label-volume{margin-top:5px;font-size:6px;font-weight:1000;letter-spacing:.04em}
-.hero-bottle-stage .hero-spark{z-index:3}
-@media(max-width:900px){.hero-bottle-stage{width:min(100%,420px);min-height:400px}.hero-stock-image{width:min(100%,365px);height:390px}.hero-label-overlay{width:clamp(108px,17vw,138px);min-height:170px}}
-@media(max-width:640px){.hero-bottle-stage{width:min(100%,350px);min-height:360px;margin:0 auto}.hero-stock-image{width:min(100%,320px);height:350px;transform:rotate(-9deg) scale(1.08)}.hero-label-overlay{width:116px;min-height:170px;top:51%;transform:translate(-50%,-43%) rotate(-9deg)}.hero-label-brand{font-size:18px}.hero-label-flavor strong{font-size:17px}}
-@media(max-width:360px){.hero-bottle-stage{width:min(100%,320px);min-height:335px}.hero-stock-image{height:325px}.hero-label-overlay{width:105px;min-height:155px}.hero-label-brand{font-size:16px}.hero-label-pepper{font-size:28px}}
+@media(max-width:900px){.hero-bottle-stage{width:min(100%,420px);min-height:400px}.hero-stock-image{width:min(100%,365px);height:390px}}
+@media(max-width:640px){.hero-bottle-stage{width:min(100%,350px);min-height:360px;margin:0 auto}.hero-stock-image{width:min(100%,320px);height:350px;transform:rotate(-9deg) scale(1.08)}}
+@media(max-width:360px){.hero-bottle-stage{width:min(100%,320px);min-height:335px}.hero-stock-image{height:325px}}
