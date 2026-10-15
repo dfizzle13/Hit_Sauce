@@ -36,6 +36,14 @@ function renderCart(){const items=cartItems(),qty=items.reduce((a,x)=>a+x.qty,0)
 function add(id){const p=products.find(p=>p.id===id);if(!p||p.stock<=0){toast('That flavor is currently unavailable.');return}const current=Math.max(0,Number(cart[id])||0);if(current>=Number(p.stock)){toast('That is all the available stock for this demo.');return}cart[id]=current+1;renderCart();toast(p.name+' added to your bag.')}
 document.addEventListener('click',e=>{const a=e.target.closest('[data-add]');if(a){e.preventDefault();e.stopPropagation();add(a.dataset.add);return}const q=e.target.closest('[data-qty]');if(q){const id=q.dataset.qty,p=products.find(x=>x.id===id);cart[id]=Math.max(0,Math.min(Number(p?.stock)||0,(Number(cart[id])||0)+Number(q.dataset.delta)));if(cart[id]<=0)delete cart[id];renderCart();return}if(e.target.closest('#emptyShop')){closeCart();document.querySelector('#shop').scrollIntoView({behavior:'smooth'});return}const card=e.target.closest('#products .product[data-product-id]');if(card&&!e.target.closest('button,a,input,select,textarea'))location.hash='#product/'+encodeURIComponent(card.dataset.productId)});
 
+const mobileMenuToggle=document.getElementById('mobileMenuToggle');
+const primaryNav=document.getElementById('primaryNav');
+function setMobileMenu(open){primaryNav.classList.toggle('mobile-open',open);mobileMenuToggle.setAttribute('aria-expanded',String(open));mobileMenuToggle.setAttribute('aria-label',open?'Close navigation menu':'Open navigation menu');mobileMenuToggle.querySelector('.menu-icon').textContent=open?'×':'☰';mobileMenuToggle.querySelector('.menu-label').textContent=open?'Close':'Menu';}
+mobileMenuToggle.addEventListener('click',()=>setMobileMenu(!primaryNav.classList.contains('mobile-open')));
+primaryNav.addEventListener('click',e=>{if(e.target.closest('a'))setMobileMenu(false)});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')setMobileMenu(false)});
+window.addEventListener('resize',()=>{if(window.innerWidth>640)setMobileMenu(false)});
+
 const filterBar=document.getElementById('filters');
 filterBar.addEventListener('click',e=>{const button=e.target.closest('button[data-filter]');if(!button||!filterBar.contains(button))return;e.preventDefault();filter=button.dataset.filter;renderProducts(true);});
 const productReviews={
