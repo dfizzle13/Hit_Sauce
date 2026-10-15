@@ -4,7 +4,8 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#06102c"><meta name="description" content="HIT SAUCE — bold flavor hits different. Discover small-batch hot sauce with comic-book attitude.">
 <title>HIT SAUCE — Bold Flavor Hits Different</title>
-<link rel="stylesheet" href="./css/storefront.css"></head>
+<link rel="stylesheet" href="./css/storefront.css">
+</head>
 <body>
 <div class="topline">BOLD FLAVOR HITS DIFFERENT &nbsp; ✦ &nbsp; MADE WITH ATTITUDE IN OHIO</div>
 <header class="nav"><a href="#" class="wordmark" aria-label="HIT SAUCE home">HIT <span>SAUCE</span></a><nav class="navlinks"><a href="#shop">Shop sauces</a><a href="#story">Our story</a><a href="#promise">The good stuff</a></nav><div class="navactions"><button class="iconbtn" id="adminOpen" title="Manage products">Manage</button><button class="iconbtn" id="cartOpen" aria-label="Open shopping cart">Bag <span class="cartcount" id="cartCount">0</span></button></div></header>
@@ -19,70 +20,8 @@
 <div class="overlay" id="cartOverlay"><aside class="drawer"><div class="drawerhead"><h2>Your bag <span id="bagQty"></span></h2><button class="close" id="cartClose" aria-label="Close cart">×</button></div><div id="cartContents"></div><div id="cartSummary" class="hidden"><div class="carttotal"><span>Subtotal</span><span id="subtotal">$0.00</span></div><p class="fine">Shipping and any applicable taxes are calculated later. This demo does not collect payment details.</p><button class="btn dark" id="checkoutStart" style="width:100%;margin:8px 0">Continue to checkout →</button><button class="btn outline" id="keepShopping" style="width:100%;margin-top:8px">Keep shopping</button></div><form class="checkoutform" id="checkoutForm"><h3>Delivery details</h3><div class="notice">Demo checkout: order details can be reviewed, but payment processing is intentionally not connected. No payment will be taken.</div><div class="field"><label for="customerName">Full name</label><input id="customerName" required autocomplete="name"></div><div class="field"><label for="customerEmail">Email</label><input id="customerEmail" type="email" required autocomplete="email"></div><div class="field"><label for="customerAddress">Shipping address</label><input id="customerAddress" required autocomplete="street-address"></div><div class="field"><label for="customerCity">City</label><input id="customerCity" required autocomplete="address-level2"></div><div class="field"><label for="customerState">State</label><input id="customerState" required autocomplete="address-level1"></div><div class="field"><label for="customerZip">ZIP code</label><input id="customerZip" required autocomplete="postal-code"></div><div class="carttotal"><span>Order subtotal</span><span id="checkoutTotal">$0.00</span></div><button class="btn dark" type="submit" style="width:100%">Review demo order</button><button class="btn outline" type="button" id="backToBag" style="width:100%;margin-top:8px">Back to bag</button></form><div id="orderComplete" class="hidden"></div></aside></div>
 <div class="adminpanel" id="adminPanel"><div class="adminbox"><div class="adminhead"><div><div class="kicker">Store management</div><h2>Product desk</h2><p class="fine">Edit product listings, pricing, availability and flavor details. Changes save in this browser.</p></div><button class="close" id="adminClose" aria-label="Close product manager">×</button></div><div class="notice">Prototype admin: there is no login or shared database yet. Product changes are stored in this browser only. Connect a secure backend before public launch.</div><div id="adminList" class="adminlist"></div><h3 id="formTitle">Add a product</h3><form id="productForm" class="adminform"><input type="hidden" id="editId"><div class="field"><label for="pName">Product name</label><input id="pName" required maxlength="70"></div><div class="field"><label for="pPrice">Price (USD)</label><input id="pPrice" type="number" min=".01" step=".01" required></div><div class="field"><label for="pHeat">Heat level</label><select id="pHeat"><option value="mild">Easy heat</option><option value="medium">Medium heat</option><option value="hot">Bring the heat</option></select></div><div class="field"><label for="pColor">Label accent</label><select id="pColor"><option value="#ffe51d">Punch yellow</option><option value="#ff602f">Habanero orange</option><option value="#00e5f2">Electric cyan</option><option value="#f51da8">Hot pink</option><option value="#8b65ff">Purple pop</option><option value="#79ed4d">Pepper green</option></select></div><div class="field wide"><label for="pDescription">Description</label><textarea id="pDescription" rows="2" maxlength="240" required></textarea></div><div class="field"><label for="pTag">Badge</label><input id="pTag" maxlength="24" placeholder="Bestseller"></div><div class="field"><label for="pStock">Available quantity</label><input id="pStock" type="number" min="0" step="1" value="20" required></div><div class="wide" style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn dark" type="submit">Save product</button><button class="btn outline" type="button" id="resetProduct">Clear form</button></div></form><p class="fine">Orders and inventory in this prototype are browser-local, not synced between customers or devices.</p></div></div><div class="toast" id="toast" role="status"></div>
 
-<link rel="stylesheet" href="./css/storefront.css">
+
+
 <script src="./js/storefront.js" defer></script>
-</body></html>+(Number(n)||0).toFixed(2);
- const catalog=()=>{const saved=read('hitsauce_products',defaults);return Array.isArray(saved)?[...defaults.filter(d=>!saved.some(p=>p&&p.id===d.id)),...saved].filter(p=>p&&p.id&&p.name):defaults};
- let products=catalog();
- const getCart=()=>{const raw=read('hitsauce_cart',{});return raw&&typeof raw==='object'&&!Array.isArray(raw)?raw:{}};
- let cart=getCart();
- const saveCart=()=>{try{localStorage.setItem('hitsauce_cart',JSON.stringify(cart))}catch{}};
- const toast=s=>{const t=$('#toast');if(t){t.textContent=s;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200)}};
- const qtyTotal=()=>Object.values(cart).reduce((n,v)=>n+Math.max(0,Number(v)||0),0);
- function drawCart(){
-  products=catalog();cart=getCart();
-  cart=Object.fromEntries(Object.entries(cart).filter(([id,q])=>products.some(p=>p.id===id)&&Number(q)>0).map(([id,q])=>{const p=products.find(p=>p.id===id);return[id,Math.min(Math.floor(Number(q)),Math.max(0,Number(p.stock)||0))]}).filter(x=>x[1]>0));saveCart();
-  const items=Object.entries(cart).map(([id,q])=>({p:products.find(p=>p.id===id),q:Number(q)})).filter(x=>x.p);
-  const count=items.reduce((n,x)=>n+x.q,0),sum=items.reduce((n,x)=>n+x.q*Number(x.p.price||0),0);
-  if($('#cartCount'))$('#cartCount').textContent=count;
-  if($('#bagQty'))$('#bagQty').textContent=count?'('+count+')':'';
-  if($('#subtotal'))$('#subtotal').textContent=money(sum);
-  if($('#checkoutTotal'))$('#checkoutTotal').textContent=money(sum);
-  if($('#cartSummary'))$('#cartSummary').classList.toggle('hidden',!count);
-  if($('#cartContents'))$('#cartContents').innerHTML=items.length?items.map(({p,q})=>'<div class="cartitem"><div class="mini">🌶️</div><div><h4>'+esc(p.name)+'</h4><small>'+money(p.price)+' each</small><div class="qty"><button type="button" data-fallback-qty="'+esc(p.id)+'" data-delta="-1" aria-label="Remove one">−</button><span>'+q+'</span><button type="button" data-fallback-qty="'+esc(p.id)+'" data-delta="1" aria-label="Add one" '+(q>=Number(p.stock)?'disabled':'')+'>+</button></div></div><b>'+money(p.price*q)+'</b></div>').join(''):'<div class="empty"><div class="emoji">🛍️</div><h3>Your bag is waiting.</h3><p class="fine">Add a little flavor to get things started.</p><button class="btn dark" type="button" id="fallbackEmptyShop">Shop sauces</button></div>';
-  return {items,count,sum};
- }
- function add(id){products=catalog();const p=products.find(x=>x.id===id);if(!p||Number(p.stock)<=0){toast('That flavor is currently unavailable.');return}cart=getCart();const n=Number(cart[id])||0;if(n>=Number(p.stock)){toast('That is all the available stock for this demo.');return}cart[id]=n+1;saveCart();drawCart();toast(p.name+' added to your bag.')}
- function openCart(){drawCart();$('#cartOverlay')?.classList.add('open');$('#checkoutForm')?.classList.remove('show');$('#orderComplete')?.classList.add('hidden');$('#cartSummary')?.classList.toggle('hidden',qtyTotal()===0)}
- function closeCart(){$('#cartOverlay')?.classList.remove('open')}
- function ensureCardLinks(){
-  const cards=document.querySelectorAll('#products .product');
-  cards.forEach(card=>{
-   let id=card.dataset.productId;
-   if(!id){const name=card.querySelector('h3')?.textContent?.trim();id=products.find(p=>p.name===name)?.id;if(id)card.dataset.productId=id}
-   if(!id)return;
-   if(!card.querySelector('.product-quick-link')){const info=card.querySelector('.productinfo');if(info){const a=document.createElement('a');a.className='product-quick-link';a.href='#product/'+encodeURIComponent(id);a.textContent='View flavor details →';info.appendChild(a)}}
-   card.querySelectorAll('a.product-card-link,a.product-title-link').forEach(a=>{a.style.pointerEvents='auto';a.style.position='relative';a.style.zIndex='1'});
-  });
- }
- function showProduct(id){
-  products=catalog();const p=products.find(x=>x.id===id),page=$('#productPage');if(!p||!page)return false;
-  document.querySelectorAll('main > section:not(#productPage), main > .ticker, main > .sectionhead').forEach(el=>el.classList.add('route-hidden'));$('.newsletter')?.classList.add('route-hidden');page.classList.remove('hidden');
-  const photo='https://imagemo.fsn1.your-objectstorage.com/images/2024/05/18/preview_664840aab1d2c1716011178.png';
-  page.innerHTML='<a class="detail-back" href="#shop">← Back to all sauces</a><div class="detail-grid"><div class="detail-photo"><img src="'+photo+'" alt="Hot sauce bottle photo for '+esc(p.name)+'"></div><div class="detail-copy"><div class="kicker">'+esc(({mild:'Easy heat',medium:'Medium heat',hot:'Bring the heat'})[p.heat]||'Flavor lineup')+' · MADE IN OHIO</div><h2>'+esc(p.name)+'</h2><div class="detail-price">'+money(p.price)+'</div><p>'+esc(p.description||'Bold flavor with a little HIT SAUCE attitude.')+'</p><p><b>Ways to use it:</b> Tacos, eggs, pizza, sandwiches, bowls, and your favorite snacks.</p><p><b>Demo listing:</b> Product details and inventory are sample content for site testing.</p><button class="btn dark" type="button" data-add="'+esc(p.id)+'">Add to bag · '+money(p.price)+'</button></div></div><h3 class="detail-subhead">More flavors</h3><p><a href="#shop">Browse all sauces →</a></p>';
-  window.scrollTo({top:0,behavior:'smooth'});return true;
- }
- document.addEventListener('click',function(e){
-  const addBtn=e.target.closest('[data-add]');
-  if(addBtn){e.preventDefault();e.stopImmediatePropagation();add(addBtn.dataset.add);return}
-  const q=e.target.closest('[data-fallback-qty]');
-  if(q){e.preventDefault();e.stopImmediatePropagation();cart=getCart();const id=q.dataset.fallbackQty,p=products.find(x=>x.id===id);cart[id]=Math.max(0,Math.min(Number(p?.stock)||0,(Number(cart[id])||0)+Number(q.dataset.delta)));if(!cart[id])delete cart[id];saveCart();drawCart();return}
-  if(e.target.closest('#cartOpen')){e.preventDefault();e.stopImmediatePropagation();openCart();return}
-  if(e.target.closest('#cartClose,#keepShopping')){e.preventDefault();e.stopImmediatePropagation();closeCart();return}
-  if(e.target.id==='cartOverlay'){closeCart();return}
-  if(e.target.closest('#fallbackEmptyShop')){closeCart();location.hash='#shop';return}
-  const card=e.target.closest('#products .product[data-product-id]');
-  if(card&&!e.target.closest('button,input,select,textarea')){const id=card.dataset.productId;if(id){e.preventDefault();location.hash='#product/'+encodeURIComponent(id);showProduct(id)}}
- },true);
- document.addEventListener('keydown',e=>{const card=e.target.closest('#products .product[data-product-id]');if(card&&(e.key==='Enter'||e.key===' ')){if(e.target.closest('a,button,input'))return;e.preventDefault();location.hash='#product/'+encodeURIComponent(card.dataset.productId);showProduct(card.dataset.productId)}});
- window.addEventListener('hashchange',()=>{const m=location.hash.match(/^#product\/(.+)$/);if(m)showProduct(decodeURIComponent(m[1]));else{document.querySelectorAll('.route-hidden').forEach(el=>el.classList.remove('route-hidden'));$('#productPage')?.classList.add('hidden')}});
- const filterBar=$('#filters');
- if(filterBar)filterBar.addEventListener('click',e=>{const b=e.target.closest('button[data-filter]');if(!b)return;setTimeout(()=>{const visible=[...document.querySelectorAll('#products .product')].filter(c=>c.style.display!=='none');visible.forEach((c,i)=>{c.classList.remove('filter-enter');void c.offsetWidth;c.classList.add('filter-enter');c.style.animationDelay=(i*55)+'ms'});ensureCardLinks()},0)});
- ensureCardLinks();drawCart();
- const mo=new MutationObserver(()=>ensureCardLinks());const grid=$('#products');if(grid)mo.observe(grid,{childList:true,subtree:true});
-})();
-</script>
-
-
-
-</body></html>
+</body>
+</html>
