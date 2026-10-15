@@ -1,4 +1,4 @@
-name: Deploy HIT SAUCE storefront to GitHub Pages
+name: Test and deploy HIT SAUCE storefront
 
 on:
   push:
@@ -23,6 +23,17 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - name: Install test dependencies
+        run: npm install --no-audit --no-fund
+      - name: Install Chromium for browser tests
+        run: npx playwright install --with-deps chromium
+      - name: Run storefront browser regression tests
+        run: npm test
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
         with:
@@ -31,6 +42,11 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: .
+          exclude:
+            - .git
+            - node_modules
+            - test-results
+            - playwright-report
       - name: Deploy site
         id: deployment
         uses: actions/deploy-pages@v4
