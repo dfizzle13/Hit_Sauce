@@ -151,3 +151,85 @@ img{max-width:100%}
 @media(max-width:900px){.hero-bottle-stage{width:min(100%,420px);min-height:400px}.hero-stock-image{width:min(100%,365px);height:390px}}
 @media(max-width:640px){.hero-bottle-stage{width:min(100%,350px);min-height:360px;margin:0 auto}.hero-stock-image{width:min(100%,320px);height:350px;transform:rotate(-9deg) scale(1.08)}}
 @media(max-width:360px){.hero-bottle-stage{width:min(100%,320px);min-height:335px}.hero-stock-image{height:325px}}
+
+
+/* HIT SAUCE polish pass — tactile hover states, clearer hierarchy, and premium depth.
+   Hover interactions remain; no click-triggered scroll effects are introduced. */
+:root{
+  --shadow-card:0 10px 28px #06102c0d;
+  --shadow-card-hover:0 20px 42px #06102c1c;
+  --focus-ring:0 0 0 4px #00e5f230;
+}
+::selection{background:var(--cyan);color:var(--navy)}
+.topline{position:relative}
+.nav{backdrop-filter:saturate(140%) blur(14px);box-shadow:0 8px 24px #02091c12}
+.navlinks a{position:relative;transition:color .18s ease}
+.navlinks a:after{content:"";position:absolute;left:0;right:100%;bottom:-7px;height:2px;background:var(--cyan);transition:right .2s ease}
+.navlinks a:hover:after,.navlinks a:focus-visible:after{right:0}
+.iconbtn,.filter,.add,.btn,.clear-catalog{transition:color .18s ease,background-color .18s ease,border-color .18s ease,box-shadow .18s ease,transform .18s ease}
+.iconbtn:hover{box-shadow:0 0 0 3px #00e5f21a}
+.btn{box-shadow:5px 5px 0 var(--pink)}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--pink)}
+.btn:active,.add:active,.iconbtn:active,.filter:active{transform:translateY(1px)}
+.hero{isolation:isolate}
+.hero-copy{animation:hitIntro .55s cubic-bezier(.2,.7,.2,1) both}
+.hero-art{animation:hitIntro .7s .08s cubic-bezier(.2,.7,.2,1) both}
+.hero-copy p{max-width:39ch}
+.hero .eyebrow{padding:8px 11px;border:1px solid #00e5f24a;background:#00e5f20c}
+.ticker{box-shadow:inset 0 1px #ffffff24,inset 0 -1px #06102c18}
+.sectionhead{position:relative}
+.sectionhead h2,.story h2{ text-wrap:balance }
+.catalog-search,.catalog-sort select{border-radius:10px;transition:border-color .18s ease,box-shadow .18s ease,transform .18s ease}
+.catalog-search:focus-within,.catalog-sort select:focus-visible{box-shadow:var(--focus-ring);border-color:var(--cyan)}
+.filter{background:#ffffff8a}
+.filter.active{box-shadow:0 5px 0 #00e5f2}
+.product{position:relative;border-radius:14px;overflow:hidden;box-shadow:var(--shadow-card);border-color:#e7e7ed;transform:translateZ(0)}
+.product:after{content:"";position:absolute;inset:0;border:1px solid transparent;border-radius:inherit;pointer-events:none;transition:border-color .2s ease}
+.product:hover{transform:translateY(-6px);box-shadow:var(--shadow-card-hover)}
+.product:hover:after{border-color:#06102c18}
+.productvisual{isolation:isolate}
+.productvisual:before{transition:transform .35s cubic-bezier(.2,.7,.2,1),opacity .25s ease}
+.product:hover .productvisual:before{transform:rotate(2deg) scale(1.055);opacity:1}
+.productinfo{padding:20px}
+.product h3{line-height:1.08;text-wrap:balance}
+.producttype{color:#7354b9}
+.productbottom{align-items:center}
+.price{letter-spacing:-.04em}
+.add{border-radius:8px;box-shadow:0 4px 0 #02091c18}
+.add:hover{background:var(--pink);color:white;box-shadow:0 5px 0 #a70d6d}
+.add:focus-visible,.btn:focus-visible,.iconbtn:focus-visible,.filter:focus-visible{outline:3px solid var(--cyan);outline-offset:3px}
+.story{position:relative;overflow:hidden}
+.storyvisual{border-radius:16px;box-shadow:14px 14px 0 var(--cyan)}
+.storyvisual img{transition:transform .55s cubic-bezier(.2,.7,.2,1)}
+.storyvisual:hover img{transform:scale(1.035)}
+.promise{gap:1px}
+.promise div{transition:background-color .2s ease,transform .2s ease}
+.promise div:hover{background:#fff;transform:translateY(-2px)}
+.promise i{display:inline-grid;place-items:center;width:52px;height:52px;border-radius:16px;background:#06102c0a}
+.newsletter{position:relative;isolation:isolate;overflow:hidden}
+.newsletter:after{content:"";position:absolute;z-index:-1;width:360px;height:360px;right:-90px;top:-190px;border:1px solid #00e5f238;border-radius:50%;box-shadow:0 0 0 35px #00e5f20a,0 0 0 70px #f51da80a}
+.signup input{border-radius:8px;transition:border-color .18s ease,box-shadow .18s ease}
+.signup input:focus{border-color:var(--cyan);box-shadow:var(--focus-ring)}
+.footer a{transition:color .18s ease}
+.footer a:hover{color:var(--cyan)}
+.drawer{box-shadow:-20px 0 60px #0004}
+.toast{border:1px solid #ffffff24;box-shadow:0 12px 36px #02091c38;border-radius:10px}
+@keyframes hitIntro{from{opacity:0;translate:0 12px}to{opacity:1;translate:0 0}}
+@media(max-width:900px){
+ .productinfo{padding:16px}
+ .storyvisual{box-shadow:9px 9px 0 var(--cyan)}
+}
+@media(max-width:640px){
+ .hero-copy,.hero-art{animation:none}
+ .product{border-radius:12px}
+ .product:hover{transform:translateY(-3px)}
+ .productinfo{padding:13px}
+ .productbottom{align-items:stretch}
+ .storyvisual{box-shadow:6px 6px 0 var(--cyan)}
+ .promise div:hover{transform:none}
+}
+@media(prefers-reduced-motion:reduce){
+ .hero-copy,.hero-art{animation:none!important}
+ .navlinks a:after{transition:none}
+ .storyvisual img,.product,.productvisual:before,.btn,.iconbtn,.filter,.add{transition:none!important}
+}
