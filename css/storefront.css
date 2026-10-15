@@ -11,3 +11,9 @@
 .product-quick-link{display:inline-flex;align-items:center;gap:6px;margin-top:8px;padding:8px 0;color:#6042a4;font-weight:800;font-size:12px;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
 .product-card-link{cursor:pointer}
 @media(prefers-reduced-motion:reduce){#products .product,#products .product.filter-enter{animation:none!important;transition:none!important}}
+
+/* Our Story uses a real Ohio downtown photograph instead of a decorative graphic. */
+.storyvisual{min-height:300px;isolation:isolate;background:#dfe4ee}
+.storyvisual:before{display:none}
+.storyvisual img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block}
+.story-photo-credit{position:absolute;left:12px;bottom:12px;z-index:1;background:#06102ce8;color:#fff;padding:7px 10px;font-size:10px;font-weight:850;letter-spacing:.07em;text-transform:uppercase}
