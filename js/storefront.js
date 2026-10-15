@@ -13,7 +13,7 @@ function save(){localStorage.setItem('hitsauce_products',JSON.stringify(products
 function toast(s){const t=document.getElementById('toast');t.textContent=s;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200)}
 function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function heatName(h){return h==='mild'?'Easy heat':h==='medium'?'Medium heat':'Bring the heat'}
-function renderProducts(){
+function renderProducts(animate=false){
  const list=products.filter(p=>filter==='all'||p.heat===filter);
  const status=document.getElementById('filterStatus');
  if(status)status.textContent=filter==='all'?'Showing all '+list.length+' sauces':'Showing '+list.length+' '+heatName(filter).toLowerCase()+' '+(list.length===1?'sauce':'sauces');
@@ -24,6 +24,10 @@ function renderProducts(){
   const short=desc.length>112?desc.slice(0,109).trimEnd()+'…':desc;
   return '<article class="product" data-product-id="'+esc(p.id)+'" data-heat="'+esc(p.heat)+'" tabindex="0" role="link" aria-label="View '+esc(p.name)+' details"><a class="product-card-link" href="#product/'+encodeURIComponent(p.id)+'" aria-label="View '+esc(p.name)+' details"><div class="productvisual stock-product-visual" style="--accent:'+esc(p.color)+';--pale:'+esc(p.pale||'#f2f2f2')+'"><span class="tag">'+esc(p.tag||heatName(p.heat))+'</span><img class="product-stock-image" src="'+stockPhoto+'" alt="Hot sauce bottle stock photo for '+esc(p.name)+'" loading="lazy"><span class="stock-photo-note">STOCK PHOTO · MOCK FLAVOR</span></div></a><div class="productinfo"><div class="producttype">'+esc(heatName(p.heat))+' · DEMO PRODUCT</div><h3><a class="product-title-link" href="#product/'+encodeURIComponent(p.id)+'">'+esc(p.name)+'</a></h3><p>'+esc(short)+(desc.length>112?' <a class="more-link" href="#product/'+encodeURIComponent(p.id)+'" data-product="'+esc(p.id)+'">more</a>':'')+'</p><div class="productbottom"><span class="price">'+money(p.price)+'</span><button class="add" data-add="'+esc(p.id)+'" '+(p.stock<=0?'disabled':'')+'>'+(p.stock<=0?'Sold out':'Add to bag +')+'</button></div></div></article>';
  }).join(''):'<p>No products in this heat category yet.</p>';
+ if(animate&&!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+  const cards=[...document.querySelectorAll('#products .product')];
+  cards.forEach((card,index)=>{card.classList.remove('filter-enter');card.style.animationDelay=(index*65)+'ms';void card.offsetWidth;card.classList.add('filter-enter')});
+ }
 }
 // Render the catalog immediately, before wiring cart/admin handlers, so an unrelated UI error cannot leave the shop blank.
 renderProducts();
@@ -33,7 +37,7 @@ function add(id){const p=products.find(p=>p.id===id);if(!p||p.stock<=0){toast('T
 document.addEventListener('click',e=>{const a=e.target.closest('[data-add]');if(a){e.preventDefault();e.stopPropagation();add(a.dataset.add);return}const q=e.target.closest('[data-qty]');if(q){const id=q.dataset.qty,p=products.find(x=>x.id===id);cart[id]=Math.max(0,Math.min(Number(p?.stock)||0,(Number(cart[id])||0)+Number(q.dataset.delta)));if(cart[id]<=0)delete cart[id];renderCart();return}if(e.target.closest('#emptyShop')){closeCart();document.querySelector('#shop').scrollIntoView({behavior:'smooth'});return}const card=e.target.closest('#products .product[data-product-id]');if(card&&!e.target.closest('button,a,input,select,textarea'))location.hash='#product/'+encodeURIComponent(card.dataset.productId)});
 
 const filterBar=document.getElementById('filters');
-filterBar.addEventListener('click',e=>{const button=e.target.closest('button[data-filter]');if(!button||!filterBar.contains(button))return;e.preventDefault();filter=button.dataset.filter;renderProducts();});
+filterBar.addEventListener('click',e=>{const button=e.target.closest('button[data-filter]');if(!button||!filterBar.contains(button))return;e.preventDefault();filter=button.dataset.filter;renderProducts(true);});
 const productReviews={
  original:[['★★★★★','Mia R.','Big flavor, balanced kick, and great on tacos.'],['★★★★★','Jordan K.','A little goes a long way. Definitely a pantry staple.']],
  jalapeno:[['★★★★★','Sam T.','Fresh, bright flavor that works on just about anything.'],['★★★★☆','Alex P.','Easy everyday heat with a nice savory finish.']],
