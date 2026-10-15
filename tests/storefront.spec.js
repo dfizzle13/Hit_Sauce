@@ -104,3 +104,29 @@ test('storefront fits common mobile viewport widths without horizontal page over
     await expect(page.locator('#products .product')).toHaveCount(4);
   }
 });
+
+test('catalog search finds products by name and clear restores the lineup', async ({ page }) => {
+  await page.locator('#productSearch').fill('purple');
+  await expect(page.locator('#products .product')).toHaveCount(1);
+  await expect(page.locator('#products')).toContainText('Purple Haze');
+  await expect(page.locator('#filterStatus')).toContainText('Showing 1 of 4');
+  await page.locator('#clearCatalog').click();
+  await expect(page.locator('#productSearch')).toHaveValue('');
+  await expect(page.locator('#products .product')).toHaveCount(4);
+});
+
+test('catalog sort changes price order and heat filters compose with search', async ({ page }) => {
+  await page.locator('#productSort').selectOption('price-low');
+  await expect(page.locator('#products .product').first()).toContainText('Mexican Style Jalapeño');
+  await page.locator('#filters [data-filter="hot"]').click();
+  await expect(page.locator('#products .product')).toHaveCount(2);
+  await page.locator('#productSearch').fill('inferno');
+  await expect(page.locator('#products .product')).toHaveCount(1);
+  await expect(page.locator('#products .product').first()).toContainText('Afterburn Inferno');
+});
+
+test('each flavor uses a distinct on-brand mock bottle illustration without generic stock photos', async ({ page }) => {
+  await expect(page.locator('#products .bottle-render')).toHaveCount(4);
+  await expect(page.locator('#products .bottle-label-art strong')).toHaveCount(4);
+  await expect(page.locator('#products .product-stock-image')).toHaveCount(0);
+});
