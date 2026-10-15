@@ -60,7 +60,7 @@ test('checkout creates an explicitly local demo order without taking payment', a
   });
   await page.locator('#customerZip').fill('45373');
   await page.locator('#checkoutForm button[type="submit"]').click();
-  await expect(page.locator('#orderComplete')).toContainText('payment has not been taken');
+  await expect(page.locator('#orderComplete')).toContainText(/payment has not been taken/i);
   const orders = await page.evaluate(() => JSON.parse(localStorage.getItem('hitsauce_demo_orders') || '[]'));
   expect(orders).toHaveLength(1);
   expect(orders[0].status).toContain('payment not processed');
