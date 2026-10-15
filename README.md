@@ -1,18 +1,40 @@
 # HIT SAUCE Storefront
 
-A responsive, single-file storefront prototype inspired by the current HIT SAUCE label artwork: comic-book bursts, a navy base, electric cyan and pink accents, punch yellow, orange-red flavor color, and the pepper mascot motif. The wordmark intentionally reads **HIT SAUCE** (the I is a letter, not an exclamation point).
+A responsive storefront prototype inspired by the HIT SAUCE label direction: comic-book attitude, navy, electric cyan and pink accents, punch yellow, and bold flavor color. The wordmark intentionally reads **HIT SAUCE** (the I is a letter, not an exclamation point). Brand line: **Bold Flavor Hits Different**.
 
-## Run it
-Open `index.html` in a modern browser, or enable GitHub Pages for the repository to publish the static storefront.
+## Project layout
 
-## Included in this prototype
-- Responsive product catalog with four mock flavor concepts and heat filters.
-- Add-to-cart, quantity changes, cart subtotal, and stock-aware add buttons.
-- Demo checkout form with delivery details and a locally stored order preview.
-- Browser-local product management: add, edit, remove, update price/description/heat/badge/stock.
-- Browser-local cart, product catalog, and demo order history.
+- `index.html` — page structure, accessible control labels, and semantic sections.
+- `css/storefront.css` — responsive layout, visual system, components, and motion.
+- `js/storefront.js` — catalog rendering, product detail routing, cart state, demo checkout, browser-local reviews, and the local product manager.
+- `tests/storefront.spec.js` — Playwright end-to-end regression tests for the storefront's main customer journeys.
+- `playwright.config.js` and `package.json` — browser-test setup and commands.
+- `.github/workflows/deploy-pages.yml` — runs browser tests first and deploys the public storefront only when they pass.
+
+## Run locally
+
+Use Node.js 20+ and Python 3. Start the test suite with:
+
+```sh
+npm install
+npx playwright install chromium
+npm test
+```
+
+Playwright starts a local static server automatically. To preview without tests, run `python3 -m http.server 4173` and open `http://127.0.0.1:4173`.
+
+## Current prototype capabilities
+
+- Four mock flavor concepts with heat filters and product detail views.
+- Add-to-bag, quantity controls, stock-aware add buttons, subtotal calculation, and browser-local cart persistence.
+- Demo checkout that records an explicitly non-payment order preview in this browser.
+- Browser-local product management: add, edit, remove, and update price, description, heat, badge, and stock.
+- Browser-local sample/reviewer content.
 
 ## Important before real sales
-This is a frontend prototype. It has no secure admin authentication, shared product database, authoritative inventory, server-side order processing, email service, tax/shipping calculation, or payment processor. Local storage is specific to one browser and can be edited by a customer. The checkout intentionally does not collect payment details or claim to take payment. Before accepting real orders, add a secure backend/CMS, authenticated admin roles, inventory/order persistence, validated shipping/tax logic, transactional email, and a payment provider checkout session/webhook flow. Do not treat demo orders as purchases.
 
-The flavor listings other than the brand's stated Original Habanero and Mexican Style Jalapeño are mock concepts and should be reviewed/replaced before publication.
+This is still a frontend prototype. It does **not** have secure admin authentication, a shared product database, authoritative inventory, server-side order processing, email service, tax/shipping calculation, or a payment processor. Local storage is specific to one browser and can be edited by a customer. Demo checkout does not collect payment details and does not create a real purchase.
+
+Before accepting real orders, add a secure backend/CMS, authenticated admin roles, server-side inventory and order persistence, validated shipping/tax logic, transactional email, and a payment-provider checkout session plus verified webhook handling. Never trust prices, stock, or totals supplied by the browser.
+
+The confirmed flavor names are Original Habanero and Mexican Style Jalapeño. Purple Haze and Afterburn Inferno are mock concepts and should be reviewed or replaced before launch.
