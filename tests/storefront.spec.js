@@ -1,12 +1,22 @@
 const { test, expect } = require('@playwright/test');
 
 test.beforeEach(async ({ page }) => {
-  await page.goto('/');
+  page.setDefaultNavigationTimeout(10000);
+  // Product photography is third-party hosted; the interaction suite should not depend on that host.
+  await page.route('https://imagemo.fsn1.your-objectstorage.com/**', route => route.abort());
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
   await page.evaluate(() => {
     localStorage.clear();
     sessionStorage.clear();
   });
-  await page.reload();
+  await page.reload({ waitUntil: 'domcontentloaded' });
+});
+
+test('loads the storefront without uncaught JavaScript errors', async ({ page }) => {
+  const errors = [];
+  page.on('pageerror', error => errors.push(error.message));
+  await page.reload({ waitUntil: 'domcontentloaded' });
+  expect(errors).toEqual([]);
 });
 
 test('catalog renders all four demo products', async ({ page }) => {
