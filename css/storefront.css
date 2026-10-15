@@ -129,3 +129,17 @@ img{max-width:100%}
 .detail-photo .bottle-render{margin:20px auto}.detail-photo{min-height:390px}.newsletter-note{font-size:11px!important;opacity:.8}#products .add:disabled{opacity:.55;cursor:not-allowed}#products .producttype{line-height:1.4}#products .productinfo p{overflow-wrap:anywhere}
 @media(max-width:640px){.catalog-tools{grid-template-columns:minmax(0,1fr);gap:10px}.catalog-search{max-width:none;width:100%;min-height:48px}.catalog-sort{justify-content:space-between}.catalog-sort select{flex:1;max-width:none}.catalog-status{align-items:flex-start}.bottle-render{transform:rotate(-3deg) scale(.94)}.bottle-render-detail{width:155px;height:270px;transform:rotate(-3deg)}.bottle-render-detail .bottle-label-art strong{font-size:19px}.detail-photo{min-height:300px}}
 @media(prefers-reduced-motion:reduce){.bottle-render,.product:hover .bottle-render{transition:none;transform:none}}
+
+/* Extra-narrow phones: keep the full header controls inside the viewport. */
+@media(max-width:360px){
+ html,body{max-width:100%;overflow-x:clip}
+ .nav{padding-inline:8px;gap:6px}
+ .nav>.wordmark{font-size:19px;letter-spacing:-.08em}
+ .navactions{gap:3px;flex:0 0 auto}
+ .iconbtn{padding:7px 6px;font-size:10px;white-space:nowrap}
+ .mobile-menu-toggle{gap:3px}
+ .menu-label{font-size:10px}
+ .cartcount{margin-left:2px;padding:2px 5px}
+ .hero{padding-inline:14px}
+ .section{padding-inline:12px}
+}
