@@ -233,3 +233,13 @@ img{max-width:100%}
  .navlinks a:after{transition:none}
  .storyvisual img,.product,.productvisual:before,.btn,.iconbtn,.filter,.add{transition:none!important}
 }
+
+/* Five-star review picker — real star glyphs, brand cyan/pink/navy, keyboard accessible. */
+.star-rating{display:flex;align-items:center;gap:5px;width:max-content;max-width:100%;padding:5px 0}
+.star-choice{appearance:none;border:0;background:transparent;color:#b8bfd0;font-family:Arial,sans-serif;font-size:35px;line-height:1;padding:3px 2px;cursor:pointer;text-shadow:0 1px 0 #06102c12;transition:color .15s ease,transform .15s ease,text-shadow .15s ease}
+.star-choice.is-selected{color:var(--cyan);-webkit-text-stroke:1px var(--navy);text-shadow:2px 2px 0 var(--pink)}
+.star-choice:hover{color:var(--yellow);-webkit-text-stroke:1px var(--navy);transform:translateY(-2px) rotate(-4deg);text-shadow:2px 2px 0 var(--pink)}
+.star-choice:focus-visible{outline:3px solid var(--pink);outline-offset:3px;border-radius:5px}
+.rating-help{display:block;color:#62697b;font-size:11px;margin-top:3px}
+@media(max-width:640px){.star-choice{font-size:38px;padding:5px 3px}}
+@media(prefers-reduced-motion:reduce){.star-choice{transition:none}}
