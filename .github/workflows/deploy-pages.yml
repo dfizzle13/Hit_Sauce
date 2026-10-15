@@ -37,15 +37,14 @@ jobs:
         uses: actions/configure-pages@v5
         with:
           enablement: true
+      - name: Stage only the public storefront
+        run: |
+          mkdir -p _site
+          rsync -a --exclude='.git' --exclude='node_modules' --exclude='test-results' --exclude='playwright-report' --exclude='package.json' --exclude='package-lock.json' --exclude='playwright.config.js' --exclude='tests' --exclude='_site' ./ _site/
       - name: Upload site
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
-          exclude:
-            - .git
-            - node_modules
-            - test-results
-            - playwright-report
+          path: _site
       - name: Deploy site
         id: deployment
         uses: actions/deploy-pages@v4
